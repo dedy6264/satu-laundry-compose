@@ -1,0 +1,38 @@
+
+services:
+  satu-laundry-service:
+    container_name: satu-laundry-service-${APP_VERSION}
+    image: ${REPO_DOCKER}/${APP_NAME}:${APP_VERSION}
+    restart: unless-stopped
+    tty: true
+    environment:
+      TZ: "Asia/Jakarta"
+
+      APP_PORT: ${APP_PORT}
+      APP_KEY: ${APP_KEY}
+      # PORT
+      REPO_DOCKER: ${REPO_DOCKER}
+
+      DB_DRIVER: ${DB_DRIVER}
+      DB_HOST: ${DB_HOST}
+      # HOST
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      SSL_MODE: ${SSL_MODE}
+      # PROVIDER_PROD_URL: ${PROVIDER_PROD_URL}
+      # PROVIDER_DEV_URL: ${PROVIDER_DEV_URL}
+      APP_ENV: ${APP_ENV}
+# ENV
+    ports:
+      - "10003:${APP_PORT}"
+    networks:
+      - sample-service-network
+    logging:
+        driver: "json-file"
+        options:
+            max-size: "200m"
+networks:
+  sample-service-network:
+    driver: bridge
